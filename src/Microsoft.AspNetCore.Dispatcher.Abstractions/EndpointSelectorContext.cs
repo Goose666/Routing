@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Dispatcher
     {
         public EndpointSelectorContext(
             HttpContext httpContext,
-            IReadOnlyList<DispatcherEndpoint> endpoints,
+            IReadOnlyList<EndpointDescriptor> endpoints,
             IReadOnlyList<IEndpointSelector> selectors)
         {
             if (httpContext == null)
@@ -30,11 +30,11 @@ namespace Microsoft.AspNetCore.Dispatcher
             }
 
             HttpContext = httpContext;
-            Endpoints = new List<DispatcherEndpoint>(endpoints);
+            Endpoints = new List<EndpointDescriptor>(endpoints);
             Selectors = selectors;
         }
 
-        public IList<DispatcherEndpoint> Endpoints { get; }
+        public IList<EndpointDescriptor> Endpoints { get; }
 
         public HttpContext HttpContext { get; }
 

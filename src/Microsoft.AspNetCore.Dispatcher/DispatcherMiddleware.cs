@@ -10,10 +10,10 @@ namespace Microsoft.AspNetCore.Dispatcher
     internal sealed class DispatcherMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly RequestDelegate[] _dispatchers;
+        private readonly Dispatcher[] _dispatchers;
         private readonly IEndpointSelector[] _selectors;
 
-        public DispatcherMiddleware(RequestDelegate next, RequestDelegate[] dispatchers, IEndpointSelector[] selectors)
+        public DispatcherMiddleware(RequestDelegate next, Dispatcher[] dispatchers, IEndpointSelector[] selectors)
         {
             if (next == null)
             {
@@ -35,28 +35,28 @@ namespace Microsoft.AspNetCore.Dispatcher
             _selectors = selectors;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            if (context == null)
+            if (httpContext == null)
             {
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException(nameof(httpContext));
             }
 
-            var feature = new DispatcherFeature();
-            context.Features.Set<IDispatcherFeature>(feature);
+            var context = new DefaultDispatcherContext(httpContext);
+            httpContext.Features.Set<IDispatcherFeature>(context);
 
             for (var i = 0; i < _dispatchers.Length; i++)
             {
                 var dispatcher = _dispatchers[i];
 
                 await dispatcher.Invoke(context);
-                if (feature.RequestDelegate != null)
+                if (context.RequestDelegate != null)
                 {
                     break;
                 }
             }
 
-            await _next(context);
+            await _next(httpContext);
         }
     }
 }
