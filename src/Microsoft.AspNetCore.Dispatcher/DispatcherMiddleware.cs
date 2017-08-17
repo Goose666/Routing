@@ -10,10 +10,10 @@ namespace Microsoft.AspNetCore.Dispatcher
     internal sealed class DispatcherMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly Dispatcher[] _dispatchers;
+        private readonly IDispatcher[] _dispatchers;
         private readonly IEndpointSelector[] _selectors;
 
-        public DispatcherMiddleware(RequestDelegate next, Dispatcher[] dispatchers, IEndpointSelector[] selectors)
+        public DispatcherMiddleware(RequestDelegate next, IDispatcher[] dispatchers, IEndpointSelector[] selectors)
         {
             if (next == null)
             {
@@ -49,7 +49,7 @@ namespace Microsoft.AspNetCore.Dispatcher
             {
                 var dispatcher = _dispatchers[i];
 
-                await dispatcher.Invoke(context);
+                await dispatcher.InvokeAsync(httpContext, context);
                 if (context.RequestDelegate != null)
                 {
                     break;

@@ -22,7 +22,7 @@ namespace Microsoft.AspNetCore.Dispatcher
             _addressTable = addressTable;
         }
 
-        public override IList<RequestDelegate> Dispatchers { get; } = new List<RequestDelegate>();
+        public override IList<IDispatcher> Dispatchers { get; } = new List<IDispatcher>();
 
         public override IList<EndpointMapping> Endpoints { get; } = new List<EndpointMapping>();
 

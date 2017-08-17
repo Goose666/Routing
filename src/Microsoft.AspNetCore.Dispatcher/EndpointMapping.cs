@@ -7,7 +7,7 @@ namespace Microsoft.AspNetCore.Dispatcher
 {
     public struct EndpointMapping
     {
-        public EndpointMapping(DispatcherEndpoint endpoint)
+        public EndpointMapping(EndpointDescriptor endpoint)
         {
             if (endpoint == null)
             {
@@ -18,7 +18,7 @@ namespace Microsoft.AspNetCore.Dispatcher
             Address = null;
         }
 
-        public EndpointMapping(DispatcherEndpoint endpoint, AddressDescriptor address)
+        public EndpointMapping(EndpointDescriptor endpoint, AddressDescriptor address)
         {
             if (endpoint == null)
             {
@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.Dispatcher
             Address = address;
         }
 
-        public DispatcherEndpoint Endpoint { get; }
+        public EndpointDescriptor Endpoint { get; }
 
         public AddressDescriptor Address { get; }
     }

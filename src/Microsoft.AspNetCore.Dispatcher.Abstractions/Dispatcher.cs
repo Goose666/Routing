@@ -17,9 +17,9 @@ namespace Microsoft.AspNetCore.Dispatcher
         public abstract string DisplayName { get; }
     }
 
-    public abstract class Dispatcher
+    public interface IDispatcher
     {
-        public abstract Task Invoke(HttpContext context, IDispatcherFeature dispatcherFeature);
+        Task InvokeAsync(HttpContext context, IDispatcherFeature dispatcherFeature);
     }
 
     public interface IDispatcherFeature

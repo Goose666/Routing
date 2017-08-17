@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Microsoft.AspNetCore.Dispatcher
 {
-    public sealed class StaticEndpoint : DispatcherEndpoint
+    public sealed class StaticEndpoint : EndpointDescriptor
     {
         public StaticEndpoint(RequestDelegate requestDelegate, string displayName, IEndpointSelectorMetadata[] selectorMetadata)
         {
@@ -18,13 +18,13 @@ namespace Microsoft.AspNetCore.Dispatcher
 
             RequestDelegate = requestDelegate;
             DisplayName = displayName;
-            SelectorMetadata = selectorMetadata ?? Array.Empty<IEndpointSelectorMetadata>();
+            Metadata = selectorMetadata ?? Array.Empty<IEndpointSelectorMetadata>();
         }
 
         public override string DisplayName { get; }
 
         public RequestDelegate RequestDelegate { get; }
 
-        public override IReadOnlyList<IEndpointSelectorMetadata> SelectorMetadata { get; }
+        public override IReadOnlyList<object> Metadata { get; }
     }
 }

@@ -9,7 +9,7 @@ namespace Microsoft.AspNetCore.Builder
 {
     public abstract class DispatcherBuilder
     {
-        public abstract IList<RequestDelegate> Dispatchers { get; }
+        public abstract IList<IDispatcher> Dispatchers { get; }
 
         public abstract IList<EndpointMapping> Endpoints { get; }
 
